@@ -88,6 +88,6 @@ def screenshot(add_to_x1=0,add_to_y1=0,remove_from_x2=0,remove_from_y2=0):
     myScreenshot.save(path)
     print('Screen saved succesfully...')
 
-#take_screenshot_spec_window( app='Opera') # minus -1
+#take_screenshot_spec_window( app='Opera') 
 screenshot()
 #get_screen_size(1)
