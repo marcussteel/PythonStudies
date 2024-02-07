@@ -52,31 +52,36 @@ path = f'./images/{image_name}'
 
 
 
-def take_screenshot_spec_window(add_to_x1=0,add_to_y1=0,remove_from_x2=0,remove_from_y2=0, app = 'Chrome'):
+def take_screenshot_spec_window(add_to_x1=0,add_to_y1=0,remove_from_x2=0,remove_from_y2=0, app = 'Firefox'):
     titles = pygetwindow.getAllTitles()
-    #print(titles) #açık olan pencereleri gösterir
+    print(titles) #açık olan pencereleri gösterir
 
-    if platform.system() == 'Windows' :
-        window = pygetwindow.getWindowsWithTitle(app)[0]
-        left, top = window.topleft
-        right, bottom = window.bottomright
-        pyautogui.screenshot(path)
-        im = Image.open(path)
-        im = im.crop((left + add_to_x1, top + add_to_y1, right - remove_from_x2, bottom - remove_from_y2))
-        im.save(path)
-        #im.show(path)
-        print('Screen saved succesfully...')
-    elif platform.system() == 'Darwin' :
-        x1, y1, width, height = pygetwindow.getWindowGeometry('Terminal')
-        x2 = x1 + width
-        y2 = y1 + height
+    for i in titles:
 
-        pyautogui.screenshot(path)
-        im = im.crop((x1 + add_to_x1, y1 + add_to_y1, x2 - remove_from_x2, y2 - remove_from_y2))
-        im.save(path)
-        print('Screen saved succesfully...')
-        #im.show(path)
-    time.sleep(0.5)
+        if app in i.split(): # bazen liste elemanı uzun olabiliyor bu yüzden elemanın içindeki o kelimeyi arıyoruz
+
+            if platform.system() == 'Windows' :
+                window = pygetwindow.getWindowsWithTitle(app)[0]
+                left, top = window.topleft
+                right, bottom = window.bottomright
+                pyautogui.screenshot(path)
+                im = Image.open(path)
+                im = im.crop((left + add_to_x1, top + add_to_y1, right - remove_from_x2, bottom - remove_from_y2))
+                im.save(path)
+                #im.show(path)
+                print('Screen saved succesfully...')
+            elif platform.system() == 'Darwin' :
+                x1, y1, width, height = pygetwindow.getWindowGeometry('Terminal')
+                x2 = x1 + width
+                y2 = y1 + height
+
+                pyautogui.screenshot(path)
+                im = im.crop((x1 + add_to_x1, y1 + add_to_y1, x2 - remove_from_x2, y2 - remove_from_y2))
+                im.save(path)
+                print('Screen saved succesfully...')
+                #im.show(path)
+            time.sleep(0.5)
+        
 
 def screenshot(add_to_x1=0,add_to_y1=0,remove_from_x2=0,remove_from_y2=0):
     screensize = get_screen_size(1)
@@ -88,6 +93,6 @@ def screenshot(add_to_x1=0,add_to_y1=0,remove_from_x2=0,remove_from_y2=0):
     myScreenshot.save(path)
     print('Screen saved succesfully...')
 
-#take_screenshot_spec_window( app='Opera') 
-screenshot()
+take_screenshot_spec_window( app='Opera') 
+#screenshot()
 #get_screen_size(1)
